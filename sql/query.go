@@ -6,13 +6,13 @@ import (
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
 )
 
-type SqlQuery[TEntity comparable] struct {
-	conn  sqlx.SqlConn
-	rows  string
-	table string
+type Query[TEntity comparable] struct {
+	Conn  sqlx.SqlConn
+	Rows  string
+	Table string
 }
 
-func (m *SqlQuery[TEntity]) FindSum(ctx context.Context, builder SqlBuilder, field string) (float64, error) {
+func (m *Query[TEntity]) FindSum(ctx context.Context, builder SqlBuilder, field string) (float64, error) {
 
 	if len(field) == 0 {
 		return 0, errors.Wrapf(errors.New("FindSum Least One Field"), "FindSum Least One Field")
@@ -27,7 +27,7 @@ func (m *SqlQuery[TEntity]) FindSum(ctx context.Context, builder SqlBuilder, fie
 
 	var resp float64
 
-	err = m.conn.QueryRowCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -37,14 +37,14 @@ func (m *SqlQuery[TEntity]) FindSum(ctx context.Context, builder SqlBuilder, fie
 	}
 }
 
-func (m *SqlQuery[TEntity]) FindCount(ctx context.Context, builder SqlBuilder, field string) (int64, error) {
+func (m *Query[TEntity]) FindCount(ctx context.Context, builder SqlBuilder, field string) (int64, error) {
 
-	return getCount(ctx, m.conn, builder, field)
+	return getCount(ctx, m.Conn, builder, field)
 }
 
-func (m *SqlQuery[TEntity]) FindAll(ctx context.Context, builder SqlBuilder, orderBy string) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindAll(ctx context.Context, builder SqlBuilder, orderBy string) ([]*TEntity, error) {
 
-	builder = builder.Columns(m.rows)
+	builder = builder.Columns(m.Rows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -58,7 +58,7 @@ func (m *SqlQuery[TEntity]) FindAll(ctx context.Context, builder SqlBuilder, ord
 	}
 
 	var resp []*TEntity
-	err = m.conn.QueryRowsCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -68,9 +68,9 @@ func (m *SqlQuery[TEntity]) FindAll(ctx context.Context, builder SqlBuilder, ord
 	}
 }
 
-func (m *SqlQuery[TEntity]) FindPageListByPage(ctx context.Context, builder SqlBuilder, page, pageSize int64, orderBy string) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder SqlBuilder, page, pageSize int64, orderBy string) ([]*TEntity, error) {
 
-	builder = builder.Columns(m.rows)
+	builder = builder.Columns(m.Rows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -90,7 +90,7 @@ func (m *SqlQuery[TEntity]) FindPageListByPage(ctx context.Context, builder SqlB
 
 	var resp []*TEntity
 
-	err = m.conn.QueryRowsCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -100,14 +100,14 @@ func (m *SqlQuery[TEntity]) FindPageListByPage(ctx context.Context, builder SqlB
 	}
 }
 
-func (m *SqlQuery[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builder SqlBuilder, page, pageSize int64, orderBy string) ([]*TEntity, int64, error) {
+func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builder SqlBuilder, page, pageSize int64, orderBy string) ([]*TEntity, int64, error) {
 
-	total, err := getCount(ctx, m.conn, builder, "id")
+	total, err := getCount(ctx, m.Conn, builder, "id")
 	if err != nil {
 		return nil, 0, err
 	}
 
-	builder = builder.Columns(m.rows)
+	builder = builder.Columns(m.Rows)
 
 	if orderBy == "" {
 		builder = builder.OrderBy("id DESC")
@@ -127,7 +127,7 @@ func (m *SqlQuery[TEntity]) FindPageListByPageWithTotal(ctx context.Context, bui
 
 	var resp []*TEntity
 
-	err = m.conn.QueryRowsCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -137,9 +137,9 @@ func (m *SqlQuery[TEntity]) FindPageListByPageWithTotal(ctx context.Context, bui
 	}
 }
 
-func (m *SqlQuery[TEntity]) FindPageListByIdDESC(ctx context.Context, builder SqlBuilder, preMinId, pageSize int64) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder SqlBuilder, preMinId, pageSize int64) ([]*TEntity, error) {
 
-	builder = builder.Columns(m.rows)
+	builder = builder.Columns(m.Rows)
 
 	if preMinId > 0 {
 		builder = builder.Where(" id < ? ", preMinId)
@@ -152,7 +152,7 @@ func (m *SqlQuery[TEntity]) FindPageListByIdDESC(ctx context.Context, builder Sq
 
 	var resp []*TEntity
 
-	err = m.conn.QueryRowsCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -162,9 +162,9 @@ func (m *SqlQuery[TEntity]) FindPageListByIdDESC(ctx context.Context, builder Sq
 	}
 }
 
-func (m *SqlQuery[TEntity]) FindPageListByIdASC(ctx context.Context, builder SqlBuilder, preMaxId, pageSize int64) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByIdASC(ctx context.Context, builder SqlBuilder, preMaxId, pageSize int64) ([]*TEntity, error) {
 
-	builder = builder.Columns(m.rows)
+	builder = builder.Columns(m.Rows)
 
 	if preMaxId > 0 {
 		builder = builder.Where(" id > ? ", preMaxId)
@@ -177,7 +177,7 @@ func (m *SqlQuery[TEntity]) FindPageListByIdASC(ctx context.Context, builder Sql
 
 	var resp []*TEntity
 
-	err = m.conn.QueryRowsCtx(ctx, &resp, query, values...)
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
@@ -187,8 +187,8 @@ func (m *SqlQuery[TEntity]) FindPageListByIdASC(ctx context.Context, builder Sql
 	}
 }
 
-func (m *SqlQuery[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
-	return m.conn.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
+func (m *Query[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
+	return m.Conn.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
 	})
 }
