@@ -1,21 +1,21 @@
 package web
 
-type Result[T any] struct {
+type Result struct {
 	Code int    `json:"message"`
 	Msg  string `json:"msg"`
-	Data T      `json:"data"`
+	Data any    `json:"data"`
 }
 
-func Success[T any](data T) *Result[T] {
-	return &Result[T]{
+func Success(data any) *Result {
+	return &Result{
 		Code: OK,
 		Msg:  "success",
 		Data: data,
 	}
 }
 
-func Fail[T any](err *Error) *Result[T] {
-	return &Result[T]{
+func Fail(err *Error) *Result {
+	return &Result{
 		Code: err.Code,
 		Msg:  err.Msg,
 	}

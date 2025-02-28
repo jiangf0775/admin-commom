@@ -31,7 +31,7 @@ func HttpResult[T any](w http.ResponseWriter, r http.Request, data T, err error)
 	if err != nil {
 		httpx.ErrorCtx(r.Context(), w, err)
 	} else {
-		httpx.OkJsonCtx(r.Context(), w, Success[T](data))
+		httpx.OkJsonCtx(r.Context(), w, Success(data))
 	}
 }
 
