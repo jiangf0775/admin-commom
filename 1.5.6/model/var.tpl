@@ -6,5 +6,5 @@ var (
 
 {{if .withCache}}{{.cacheKeys}}{{end}}
 
-{{.lowerStartCamelObject}}Query_ = sqls.Query[{{.upperStartCamelObject}}]{ Rows:{{.lowerStartCamelObject}}Rows }
+{{.lowerStartCamelObject}}Query = sqls.Query[{{.upperStartCamelObject}}]{ Rows:{{.lowerStartCamelObject}}Rows }
 )
