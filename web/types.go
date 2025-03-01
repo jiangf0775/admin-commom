@@ -1,12 +1,14 @@
 package web
 
+import "time"
+
 type (
 	BaseEntity struct {
-		Id               int64  `json:"id"`
-		CreatedDate      string `json:"createdDate"`
-		CreatedUserName  int    `json:"createdUserName"`
-		ModifiedDate     int    `json:"modifiedDate,optional"`
-		ModifiedUserName int    `json:"modifiedUserName,optional"`
+		Id               int64     `json:"id"`
+		CreatedDate      time.Time `json:"createdDate"`
+		CreatedUserName  string    `json:"createdUserName"`
+		ModifiedDate     time.Time `json:"modifiedDate,optional"`
+		ModifiedUserName string    `json:"modifiedUserName,optional"`
 	}
 
 	PageReq struct {

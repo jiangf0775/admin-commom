@@ -4,8 +4,8 @@
 
 func new{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c cache.CacheConf, opts ...cache.Option{{end}}) *default{{.upperStartCamelObject}}Model {
     //该方法在xxxxModel.go文件中被调用
-     _Query_.Conn = conn
-     _Query_.Table = {{.table}}
+     _sqlQuery_.Conn = conn
+     _sqlQuery_.Table = {{.table}}
 
 	return &default{{.upperStartCamelObject}}Model{
 		{{if .withCache}}CachedConn: sqlc.NewConn(conn, c, opts...){{else}}conn:conn{{end}},
