@@ -35,11 +35,18 @@ func HttpResult[T any](w http.ResponseWriter, r http.Request, data T, err error)
 	}
 }
 
-func LogicAction(w http.ResponseWriter, r *http.Request, err error, resp any) {
+func HandlerAction(w http.ResponseWriter, r *http.Request, err error, resp any) {
 
 	if err != nil {
 		httpx.ErrorCtx(r.Context(), w, err)
 	} else {
 		httpx.OkJsonCtx(r.Context(), w, resp)
 	}
+}
+
+func LogicAction(ok *Result, fail *Result, err error) (*Result, error) {
+	if err != nil {
+		return fail, err
+	}
+	return ok, nil
 }

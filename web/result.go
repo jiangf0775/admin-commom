@@ -6,6 +6,14 @@ type Result struct {
 	Data any    `json:"data"`
 }
 
+func SuccessNo() *Result {
+	return &Result{
+		Code: OK,
+		Msg:  "success",
+		Data: nil,
+	}
+}
+
 func Success(data any) *Result {
 	return &Result{
 		Code: OK,
