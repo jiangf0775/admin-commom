@@ -16,11 +16,15 @@ func GetLoginJwtToken(secretKey string, iat, exp int64, userId int64) (string, e
 	return token.SignedString([]byte(secretKey))
 }
 
-func GetJwtTokenFunc(secretKey string, iat, exp int64, setting func(claims jwt.MapClaims)) (string, error) {
+// @secretKey JWT 加解密密钥
+// @iat	时间戳
+// @exp	过期时间[秒]
+// @payload数据载体
+func GetJwtToken(secretKey string, iat, exp int64, payload string) (string, error) {
 	claims := make(jwt.MapClaims)
 	claims["exp"] = iat + exp
 	claims["iat"] = iat
-	setting(claims)
+	claims[TOKEN_PAYLOAD] = payload
 	token := jwt.New(jwt.SigningMethodHS256)
 	token.Claims = claims
 	return token.SignedString([]byte(secretKey))

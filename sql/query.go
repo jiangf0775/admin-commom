@@ -218,3 +218,35 @@ func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, 
 		return 0, err
 	}
 }
+
+func (m *Query[TEntity]) UpdateByField(ctx context.Context, clauses map[string]interface{}) (int64, error) {
+	sql, _, err := sq.Update(m.Table).SetMap(clauses).ToSql()
+	if err != nil {
+		return 0, err
+	}
+	result, err := m.Conn.ExecCtx(ctx, sql)
+	if err != nil {
+		return 0, err
+	}
+	row, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+	return row, nil
+}
+func (m *Query[TEntity]) UpdateByWhere(ctx context.Context, builder sq.UpdateBuilder) (int64, error) {
+
+	sql, _, err := builder.ToSql()
+	if err != nil {
+		return 0, err
+	}
+	result, err := m.Conn.ExecCtx(ctx, sql)
+	if err != nil {
+		return 0, err
+	}
+	row, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+	return row, nil
+}
