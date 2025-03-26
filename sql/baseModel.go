@@ -23,3 +23,7 @@ type BaseModel[TEntity comparable] interface {
 	SelectBuilder() squirrel.SelectBuilder
 	Delete(ctx context.Context, id int64) error
 }
+
+type BaseModelFieldMap interface {
+	ToMap() map[string]interface{}
+}

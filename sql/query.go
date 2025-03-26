@@ -219,8 +219,9 @@ func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, 
 	}
 }
 
-func (m *Query[TEntity]) UpdateByField(ctx context.Context, clauses map[string]interface{}) (int64, error) {
-	sql, _, err := sq.Update(m.Table).SetMap(clauses).ToSql()
+func (m *Query[TEntity]) UpdateByField(ctx context.Context, clauses BaseModelFieldMap) (int64, error) {
+	toMap := clauses.ToMap()
+	sql, _, err := sq.Update(m.Table).SetMap(toMap).ToSql()
 	if err != nil {
 		return 0, err
 	}
