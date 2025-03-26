@@ -14,13 +14,17 @@ func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, {{i
 }
 
 //TODO 自定义方法 手动加上 _sqlQuery_
-func (m *default{{.upperStartCamelObject}}Model) UpdateByField(ctx context.Context,clauses sqls.BaseModelFieldMap) (int64,error) {
-    return _sqlQuery_.UpdateByField(ctx, clauses)
-}
-func (m *default{{.upperStartCamelObject}}Model) UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) (int64,error) {
-    return _sqlQuery_.UpdateByWhere(ctx, builder)
+func (m *default{{.upperStartCamelObject}}Model) UpdateByBuild(ctx context.Context,builder sq.UpdateBuilder) (int64,error) {
+    return _sqlQuery_.UpdateByBuild(ctx, builder)
 }
 
+func (m *default{{.upperStartCamelObject}}Model) InsertByBuild(ctx context.Context,builder sq.InsertBuilder) (int64,error) {
+    return _sqlQuery_.InsertByBuild(ctx, builder)
+}
+
+func (m *default{{.upperStartCamelObject}}Model) DeleteByBuild(ctx context.Context,builder sq.UpdateBuilder) (int64,error) {
+    return _sqlQuery_.DeleteByBuild(ctx, builder)
+}
 
 func (m *default{{.upperStartCamelObject}}Model) FindSum(ctx context.Context,builder sq.SelectBuilder, field string) (float64,error) {
     return _sqlQuery_.FindSum(ctx, builder, field)
@@ -55,9 +59,17 @@ func (m *default{{.upperStartCamelObject}}Model) Trans(ctx context.Context,fn fu
     return _sqlQuery_.Trans(ctx, fn)
 }
 
-func(m *default{{.upperStartCamelObject}}Model)  SqlBuilder() sq.SelectBuilder {
+func(m *default{{.upperStartCamelObject}}Model)  SelectBuilder() sq.SelectBuilder {
 	return sq.Select().From(m.table)
+}
+
+func(m *default{{.upperStartCamelObject}}Model)  InsertBuilder() sq.InsertBuilder {
+	return sq.Insert(m.table)
 }
 func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() sq.UpdateBuilder {
 	return sq.Update(m.table)
+}
+
+func(m *default{{.upperStartCamelObject}}Model)  DeleteBuilder() sq.DeleteBuilder {
+	return sq.Delete(m.table)
 }

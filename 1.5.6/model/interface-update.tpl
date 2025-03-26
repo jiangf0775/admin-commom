@@ -1,6 +1,8 @@
+InsertByBuild(ctx context.Context,builder sq.InsertBuilder) (int64,error)
+DeleteByBuild(ctx context.Context,builder sq.UpdateBuilder) (int64,error)
+
 Update(ctx context.Context, {{if .containsIndexCache}}newData{{else}}data{{end}} *{{.upperStartCamelObject}}) error
-UpdateByField(ctx context.Context,clauses sqls.BaseModelFieldMap) (int64,error)
-UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) (int64,error)
+UpdateByBuild(ctx context.Context,builder sq.UpdateBuilder) (int64,error)
 FindSum(ctx context.Context,builder sq.SelectBuilder, field string) (float64,error)
 FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (int64,error)
 FindAll(ctx context.Context,builder sq.SelectBuilder,orderBy string) ([]*{{.upperStartCamelObject}},error)
@@ -9,5 +11,7 @@ FindPageListByPageWithTotal(ctx context.Context,builder sq.SelectBuilder,page ,p
 FindPageListByIdDESC(ctx context.Context,builder sq.SelectBuilder ,preMinId ,pageSize int) ([]*{{.upperStartCamelObject}},error)
 FindPageListByIdASC(ctx context.Context,builder sq.SelectBuilder,preMaxId ,pageSize int) ([]*{{.upperStartCamelObject}},error)
 Trans(ctx context.Context,fn func(ctx context.Context,session sqlx.Session) error) error
-SqlBuilder() sq.SelectBuilder
+SelectBuilder() sq.SelectBuilder
+InsertBuilder() sq.InsertBuilder
 UpdateBuilder() sq.UpdateBuilder
+DeleteBuilder() sq.DeleteBuilder

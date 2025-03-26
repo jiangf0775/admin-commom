@@ -22,10 +22,7 @@ type (
 	}
 
 
-    {{.upperStartCamelObject}}Map struct {
-        //用户封装表字段的结构体
-        fields map[string]interface{}
-    }
+   //todo 生成【 xxxModel.go 】
 
 )
 
@@ -38,6 +35,3 @@ func New{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c ca
 
 
 
-func (m *{{.upperStartCamelObject}}Map) ToMap() map[string]interface{} {
-	return m.fields
-}

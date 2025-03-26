@@ -219,9 +219,26 @@ func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, 
 	}
 }
 
-func (m *Query[TEntity]) UpdateByField(ctx context.Context, clauses BaseModelFieldMap) (int64, error) {
-	toMap := clauses.ToMap()
-	sql, _, err := sq.Update(m.Table).SetMap(toMap).ToSql()
+func (m *Query[TEntity]) UpdateByBuild(ctx context.Context, builder sq.UpdateBuilder) (int64, error) {
+
+	sql, values, err := builder.ToSql()
+	if err != nil {
+		return 0, err
+	}
+	result, err := m.Conn.ExecCtx(ctx, sql, values...)
+	if err != nil {
+		return 0, err
+	}
+	row, err := result.RowsAffected()
+	if err != nil {
+		return 0, err
+	}
+	return row, nil
+}
+
+func (m *Query[TEntity]) InsertByBuild(ctx context.Context, builder sq.InsertBuilder) (int64, error) {
+
+	sql, _, err := builder.ToSql()
 	if err != nil {
 		return 0, err
 	}
@@ -235,7 +252,8 @@ func (m *Query[TEntity]) UpdateByField(ctx context.Context, clauses BaseModelFie
 	}
 	return row, nil
 }
-func (m *Query[TEntity]) UpdateByWhere(ctx context.Context, builder sq.UpdateBuilder) (int64, error) {
+
+func (m *Query[TEntity]) DeleteByBuild(ctx context.Context, builder sq.UpdateBuilder) (int64, error) {
 
 	sql, _, err := builder.ToSql()
 	if err != nil {
