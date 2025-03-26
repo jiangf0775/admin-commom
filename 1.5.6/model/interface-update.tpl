@@ -1,6 +1,6 @@
 Update(ctx context.Context, {{if .containsIndexCache}}newData{{else}}data{{end}} *{{.upperStartCamelObject}}) error
-UpdateByField(ctx context.Context,clauses map[string]interface{}) error
-UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) error
+UpdateByField(ctx context.Context,clauses map[string]interface{}) (int64,error)
+UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) (int64,error)
 FindSum(ctx context.Context,builder sq.SelectBuilder, field string) (float64,error)
 FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (int64,error)
 FindAll(ctx context.Context,builder sq.SelectBuilder,orderBy string) ([]*{{.upperStartCamelObject}},error)

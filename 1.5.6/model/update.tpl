@@ -14,11 +14,11 @@ func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, {{i
 }
 
 //TODO 自定义方法 手动加上 _sqlQuery_
-func (m *default{{.upperStartCamelObject}}Model) UpdateByField(ctx context.Context,clauses map[string]interface{}) error {
-    return _sqlQuery_.UpdateByField(ctx, builder, field)
+func (m *default{{.upperStartCamelObject}}Model) UpdateByField(ctx context.Context,clauses map[string]interface{}) (int64,error) {
+    return _sqlQuery_.UpdateByField(ctx, clauses)
 }
-func (m *default{{.upperStartCamelObject}}Model) UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) error {
-    return _sqlQuery_.UpdateByWhere(ctx, builder, field)
+func (m *default{{.upperStartCamelObject}}Model) UpdateByWhere(ctx context.Context,builder sq.UpdateBuilder) (int64,error) {
+    return _sqlQuery_.UpdateByWhere(ctx, builder)
 }
 
 
