@@ -2,7 +2,6 @@ package {{.PkgName}}
 
 import (
 	"net/http"
-
 	"github.com/zeromicro/go-zero/rest/httpx"
 	{{.ImportPackages}}
 	webs "common/web"

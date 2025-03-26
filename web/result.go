@@ -14,11 +14,19 @@ func SuccessNo() *Result {
 	}
 }
 
-func Success(data any) *Result {
+func SuccessData(data any) *Result {
 	return &Result{
 		Code: OK,
 		Msg:  "success",
 		Data: data,
+	}
+}
+
+func SuccessMsg(msg string) *Result {
+	return &Result{
+		Code: OK,
+		Msg:  msg,
+		Data: nil,
 	}
 }
 
