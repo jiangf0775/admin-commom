@@ -58,6 +58,6 @@ func (m *default{{.upperStartCamelObject}}Model) Trans(ctx context.Context,fn fu
 func(m *default{{.upperStartCamelObject}}Model)  SqlBuilder() sq.SelectBuilder {
 	return sq.Select().From(m.table)
 }
-func(m *default{{.upperStartCamelObject}}Model)  SqlBuilder() sq.UpdateBuilder {
+func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() sq.UpdateBuilder {
 	return sq.Update(m.table)
 }

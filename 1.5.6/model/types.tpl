@@ -10,7 +10,6 @@ type (
 
 	{{.upperStartCamelObject}} struct {
 	    //数据库表映射的结构体
-
 		{{.fields}}
 	}
 )
