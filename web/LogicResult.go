@@ -25,3 +25,7 @@ func (l *LogicResult) ResultData(data any, resrr *Error, sysErr error) (resp *Re
 
 	return l.assert(SuccessData(data), Fail(resrr), sysErr)
 }
+
+func (l *LogicResult) Fail(resrr *Error, sysErr error) (resp *Result, err error) {
+	return Fail(resrr), sysErr
+}

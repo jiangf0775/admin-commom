@@ -38,7 +38,7 @@ func (m *Query[TEntity]) FindSum(ctx context.Context, builder sq.SelectBuilder, 
 	}
 }
 
-func (m *Query[TEntity]) FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (int64, error) {
+func (m *Query[TEntity]) FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (uint64, error) {
 
 	return getCount(ctx, m.Conn, builder, field)
 }
@@ -69,7 +69,7 @@ func (m *Query[TEntity]) FindAll(ctx context.Context, builder sq.SelectBuilder, 
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.SelectBuilder, page, pageSize int, orderBy string) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, error) {
 
 	builder = builder.Columns(m.Rows)
 
@@ -101,7 +101,7 @@ func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.Sele
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builder sq.SelectBuilder, page, pageSize int, orderBy string) ([]*TEntity, int64, error) {
+func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, uint64, error) {
 
 	total, err := getCount(ctx, m.Conn, builder, "id")
 	if err != nil {
@@ -138,7 +138,7 @@ func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builde
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder sq.SelectBuilder, preMinId, pageSize int) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder sq.SelectBuilder, preMinId, pageSize uint64) ([]*TEntity, error) {
 
 	builder = builder.Columns(m.Rows)
 
@@ -163,7 +163,7 @@ func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder sq.Se
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByIdASC(ctx context.Context, builder sq.SelectBuilder, preMaxId, pageSize int) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindPageListByIdASC(ctx context.Context, builder sq.SelectBuilder, preMaxId, pageSize uint64) ([]*TEntity, error) {
 
 	builder = builder.Columns(m.Rows)
 
@@ -194,7 +194,7 @@ func (m *Query[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context,
 	})
 }
 
-func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, field string) (int64, error) {
+func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, field string) (uint64, error) {
 
 	if len(field) == 0 {
 		return 0, errors.Wrapf(errors.New("FindCount Least One Field"), "FindCount Least One Field")
@@ -207,7 +207,7 @@ func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, 
 		return 0, err
 	}
 
-	var resp int64
+	var resp uint64
 
 	err = conn.QueryRowCtx(ctx, &resp, query, values...)
 
