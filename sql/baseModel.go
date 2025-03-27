@@ -31,6 +31,7 @@ func (m *BaseModel) SetInsert(name string, id uint64, date time.Time) {
 	m.CreatedDate = date
 	m.CreatedUserName = name
 	m.CreatedUserId = id
+
 }
 
 func (m *BaseModel) SetEdit(name string, id int64, date time.Time) {
@@ -46,7 +47,7 @@ type BaseOpt interface {
 // 数据库操作父类
 type BaseQuery[TEntity comparable] interface {
 	BaseOpt
-	FindOne(ctx context.Context, id int64) (*TEntity, error)
+	FindOne(ctx context.Context, id uint64) (*TEntity, error)
 	FindSum(ctx context.Context, builder squirrel.SelectBuilder, field string) (float64, error)
 	FindCount(ctx context.Context, builder squirrel.SelectBuilder, field string) (uint64, error)
 	FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*TEntity, error)

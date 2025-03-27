@@ -7,3 +7,7 @@ func (m *default{{.upperStartCamelObject}}Model) Insert(ctx context.Context, dat
     ret,err:=m.conn.ExecCtx(ctx, query, {{.expressionValues}}){{end}}
 	return ret,err
 }
+
+func (m *default{{.upperStartCamelObject}}Model) InsertByBuild(ctx context.Context,builder sq.InsertBuilder) (int64,error) {
+    return _sqlQuery_.InsertByBuild(ctx, builder)
+}

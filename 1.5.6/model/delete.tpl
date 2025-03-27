@@ -6,9 +6,13 @@ func (m *default{{.upperStartCamelObject}}Model) Delete(ctx context.Context, {{.
 
 {{end}}	{{.keys}}
     _, err {{if .containsIndexCache}}={{else}}:={{end}} m.ExecCtx(ctx, func(ctx context.Context, conn sqlx.SqlConn) (result sql.Result, err error) {
-		query := fmt.Sprintf("update from %s set `id`=DELETE_YES where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table)
+		query := fmt.Sprintf("update from %s set `deleted`=? where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", DELETE_YES, m.table)
 		return conn.ExecCtx(ctx, query, {{.lowerStartCamelPrimaryKey}})
-	}, {{.keyValues}}){{else}}query := fmt.Sprintf("update from %s set `id`=DELETE_YES where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table)
+	}, {{.keyValues}}){{else}}query := fmt.Sprintf("update from %s set `deleted`= ? where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", DELETE_YES, m.table)
 		_,err:=m.conn.ExecCtx(ctx, query, {{.lowerStartCamelPrimaryKey}}){{end}}
 	return err
+}
+
+func (m *default{{.upperStartCamelObject}}Model) DeleteByBuild(ctx context.Context,builder sq.UpdateBuilder) (int64,error) {
+    return _sqlQuery_.DeleteByBuild(ctx, builder)
 }

@@ -10,16 +10,16 @@ type (
 	}
 
 	PageReq struct {
-		Index int64 `json:"index,default=1"`
-		Page  int   `json:"page,default=10"`
+		Index uint64 `json:"index,default=1"`
+		Page  uint64 `json:"page,default=10"`
 	}
 
 	PathId struct {
-		Id int64 `path:"id"`
+		Id uint64 `path:"id"`
 	}
 
 	PageResult struct {
-		Total   int64 `json:"total"`
-		Results any   `json:"results"`
+		Total   uint64 `json:"total"`
+		Results any    `json:"results"`
 	}
 )
