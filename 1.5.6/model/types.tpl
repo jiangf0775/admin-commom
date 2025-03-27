@@ -11,7 +11,19 @@ type (
 	{{.upperStartCamelObject}} struct {
 	    //数据库表映射的结构体
 		{{.fields}}
-		//TODO 手动删除与【 sqls.BaseModel 】 重复的字段
-		sqls.BaseModel
 	}
 )
+
+
+func (m *{{.upperStartCamelObject}} ) SetInsert(name string, id uint64, date time.Time) {
+	m.CreatedDate = date
+	m.CreatedUserName = name
+	m.CreatedUserId = id
+
+}
+
+func (m *{{.upperStartCamelObject}} ) SetEdit(name string, id int64, date time.Time) {
+	m.ModifiedDate = sql.NullTime{Time: date, Valid: true}
+	m.ModifiedUserName = sql.NullString{String: name, Valid: true}
+	m.ModifiedUserId = sql.NullInt64{Int64: id, Valid: true}
+}

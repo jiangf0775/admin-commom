@@ -16,30 +16,6 @@ type UpdateModel interface {
 	SetEdit(name string, id uint64, date time.Time)
 }
 
-type BaseModel struct {
-	Id               uint64         `db:"id"`
-	Deleted          uint64         `db:"deleted"`
-	CreatedDate      time.Time      `db:"created_date"`
-	CreatedUserName  string         `db:"created_user_name"`
-	CreatedUserId    uint64         `db:"created_user_id"`
-	ModifiedDate     sql.NullTime   `db:"modified_date"`
-	ModifiedUserName sql.NullString `db:"modified_user_name"`
-	ModifiedUserId   sql.NullInt64  `db:"modified_user_id"`
-}
-
-func (m *BaseModel) SetInsert(name string, id uint64, date time.Time) {
-	m.CreatedDate = date
-	m.CreatedUserName = name
-	m.CreatedUserId = id
-
-}
-
-func (m *BaseModel) SetEdit(name string, id int64, date time.Time) {
-	m.ModifiedDate = sql.NullTime{Time: date, Valid: true}
-	m.ModifiedUserName = sql.NullString{String: name, Valid: true}
-	m.ModifiedUserId = sql.NullInt64{Int64: id, Valid: true}
-}
-
 type BaseOpt interface {
 	Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error
 }
