@@ -26,8 +26,8 @@ func(m *default{{.upperStartCamelObject}}Model)  InsertBuilder() sq.InsertBuilde
 	return sq.Insert(m.table)
 }
 
-func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() sq.UpdateBuilder {
-	return sq.Update(m.table)
+func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() *{{.upperStartCamelObject}}UpdateBuilder {
+	return NewBaseOptionUpdateBuilder(m.table)
 }
 
 func(m *default{{.upperStartCamelObject}}Model)  DeleteBuilder() sq.DeleteBuilder {
