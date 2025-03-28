@@ -32,11 +32,11 @@ type BaseInsert[TEntity comparable] interface {
 	InsertBuilder() squirrel.InsertBuilder
 }
 
-type BaseUpdate[TEntity comparable, TBuild comparable] interface {
+type BaseUpdate[TEntity comparable] interface {
 	BaseOpt
 	Update(ctx context.Context, data *TEntity) error
 	UpdateByBuild(ctx context.Context, builder squirrel.UpdateBuilder) (int64, error)
-	UpdateBuilder() *TBuild
+	//UpdateBuilder() squirrel.UpdateBuilder
 }
 
 type BaseDelete interface {

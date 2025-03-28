@@ -20,15 +20,11 @@ func (m *ModifyBuilder) SetBuilder(builder sq.UpdateBuilder) sq.UpdateBuilder {
 	return m.builder
 }
 
-func (m *ModifyBuilder) GetBuilder() sq.UpdateBuilder {
-	return m.builder
-}
-
 func (m *ModifyBuilder) SetEditField(name string, id uint64, date time.Time) sq.UpdateBuilder {
 	fields := make(map[string]interface{})
 	fields["modified_user_id"] = id
 	fields["modified_date"] = date
 	fields["modified_user_name"] = name
-	m.builder.SetMap(fields)
+	m.builder = m.builder.SetMap(fields)
 	return m.builder
 }

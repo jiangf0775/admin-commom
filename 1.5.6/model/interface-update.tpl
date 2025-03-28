@@ -1,4 +1,5 @@
 sqls.BaseInsert[{{.upperStartCamelObject}}]
-sqls.BaseUpdate[{{.upperStartCamelObject}}, {{.upperStartCamelObject}}UpdateBuilder]
+sqls.BaseUpdate[{{.upperStartCamelObject}}]
 sqls.BaseQuery[{{.upperStartCamelObject}}]
 sqls.BaseDelete
+UpdateBuilder(table string) *{{.upperStartCamelObject}}UpdateBuilder
