@@ -21,6 +21,11 @@ type (
 		*default{{.upperStartCamelObject}}Model
 	}
 
+    //扩展UpdateBuilder方法
+    {{.upperStartCamelObject}}UpdateBuilder struct {
+		sq.UpdateBuilder
+		sqls.ModifyBuilder
+	}
 
    //todo 生成【 xxxModel.go 】
 
@@ -33,5 +38,10 @@ func New{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c ca
 	}
 }
 
-
+//提供创建函数
+func New{{.upperStartCamelObject}}UpdateBuilder(table string) *{{.upperStartCamelObject}}UpdateBuilder {
+	builder := BaseOptionUpdateBuilder{}
+	builder.SetBuilder(sq.Update(table))
+	return &builder
+}
 

@@ -5,16 +5,7 @@ import (
 	"database/sql"
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"time"
 )
-
-type CreateModel interface {
-	SetInsert(name string, id uint64, date time.Time)
-}
-
-type UpdateModel interface {
-	SetEdit(name string, id uint64, date time.Time)
-}
 
 type BaseOpt interface {
 	Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error
@@ -41,11 +32,11 @@ type BaseInsert[TEntity comparable] interface {
 	InsertBuilder() squirrel.InsertBuilder
 }
 
-type BaseUpdate[TEntity comparable] interface {
+type BaseUpdate[TEntity comparable, TBuild comparable] interface {
 	BaseOpt
 	Update(ctx context.Context, data *TEntity) error
 	UpdateByBuild(ctx context.Context, builder squirrel.UpdateBuilder) (int64, error)
-	UpdateBuilder() squirrel.UpdateBuilder
+	UpdateBuilder() *TBuild
 }
 
 type BaseDelete interface {
