@@ -18,16 +18,16 @@ func (m *default{{.upperStartCamelObject}}Model) UpdateByBuild(ctx context.Conte
     return _sqlQuery_.UpdateByBuild(ctx, builder)
 }
 
-func(m *default{{.upperStartCamelObject}}Model)  SelectBuilder() sq.SelectBuilder {
-	return sq.Select().From(m.table)
+func(m *default{{.upperStartCamelObject}}Model)  SelectBuilder() {{.upperStartCamelObject}}SelectBuilder {
+	return New{{.upperStartCamelObject}}SelectBuilder(m.table)
 }
 
 func(m *default{{.upperStartCamelObject}}Model)  InsertBuilder() sq.InsertBuilder {
 	return sq.Insert(m.table)
 }
 
-func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() *{{.upperStartCamelObject}}UpdateBuilder {
-	return NewBaseOptionUpdateBuilder(m.table)
+func(m *default{{.upperStartCamelObject}}Model)  UpdateBuilder() {{.upperStartCamelObject}}UpdateBuilder {
+	return New{{.upperStartCamelObject}}UpdateBuilder(m.table)
 }
 
 func(m *default{{.upperStartCamelObject}}Model)  DeleteBuilder() sq.DeleteBuilder {

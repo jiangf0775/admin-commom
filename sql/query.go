@@ -200,20 +200,23 @@ func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, 
 		return 0, errors.Wrapf(errors.New("FindCount Least One Field"), "FindCount Least One Field")
 	}
 
-	builder = builder.Columns("COUNT(" + field + ")")
+	/*builder = builder.Columns("COUNT(" + field + ")")
 
 	query, values, err := builder.Where("deleted = ?", DELETE_NO).ToSql()
 	if err != nil {
 		return 0, err
-	}
+	}*/
 
-	var resp uint64
+	query := "SELECT COUNT(id) FROM `base_option` WHERE deleted = ?"
+	var values = make([]interface{}, 1)
+	values[0] = 0
 
-	err = conn.QueryRowCtx(ctx, &resp, query, values...)
+	var resp int64
+	err := conn.QueryRowCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:
-		return resp, nil
+		return uint64(resp), nil
 	default:
 		return 0, err
 	}

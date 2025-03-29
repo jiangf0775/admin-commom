@@ -5,7 +5,19 @@ import (
 	"database/sql"
 	"github.com/Masterminds/squirrel"
 	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"time"
 )
+
+type BaseModel struct {
+	Id               uint64         `db:"id"`
+	Deleted          uint64         `db:"deleted"`
+	CreatedDate      time.Time      `db:"created_date"`
+	CreatedUserName  string         `db:"created_user_name"`
+	CreatedUserId    uint64         `db:"created_user_id"`
+	ModifiedDate     sql.NullTime   `db:"modified_date"`
+	ModifiedUserName sql.NullString `db:"modified_user_name"`
+	ModifiedUserId   sql.NullInt64  `db:"modified_user_id"`
+}
 
 type BaseOpt interface {
 	Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error
@@ -22,7 +34,6 @@ type BaseQuery[TEntity comparable] interface {
 	FindPageListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, uint64, error)
 	FindPageListByIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize uint64) ([]*TEntity, error)
 	FindPageListByIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize uint64) ([]*TEntity, error)
-	SelectBuilder() squirrel.SelectBuilder
 }
 
 type BaseInsert[TEntity comparable] interface {

@@ -13,6 +13,10 @@ type (
 	ModifyBuilder struct {
 		builder sq.UpdateBuilder
 	}
+
+	QueryBuilder struct {
+		builder sq.SelectBuilder
+	}
 )
 
 func (m *ModifyBuilder) SetBuilder(builder sq.UpdateBuilder) sq.UpdateBuilder {
@@ -20,11 +24,21 @@ func (m *ModifyBuilder) SetBuilder(builder sq.UpdateBuilder) sq.UpdateBuilder {
 	return m.builder
 }
 
-func (m *ModifyBuilder) SetEditField(name string, id uint64, date time.Time) sq.UpdateBuilder {
+func (m ModifyBuilder) SetEditField(name string, id uint64, date time.Time) sq.UpdateBuilder {
 	fields := make(map[string]interface{})
 	fields["modified_user_id"] = id
 	fields["modified_date"] = date
 	fields["modified_user_name"] = name
 	m.builder = m.builder.SetMap(fields)
+	return m.builder
+}
+
+func (m *QueryBuilder) SetBuilder(builder sq.SelectBuilder) sq.SelectBuilder {
+	m.builder = builder
+	return m.builder
+}
+
+func (m QueryBuilder) SkipDel() sq.SelectBuilder {
+	m.builder = m.builder.Where(" deleted = ?", DELETE_NO)
 	return m.builder
 }

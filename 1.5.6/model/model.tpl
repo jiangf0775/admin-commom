@@ -30,7 +30,11 @@ type (
 		sq.UpdateBuilder
 		sqls.ModifyBuilder
 	}
-
+    //扩展UpdateBuilder方法
+    {{.upperStartCamelObject}}SelectBuilder struct {
+		sq.SelectBuilder
+		sqls.QueryBuilder
+	}
    //todo 生成【 xxxModel.go 】
 
 )
@@ -43,9 +47,16 @@ func New{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c ca
 }
 
 //提供创建函数
-func New{{.upperStartCamelObject}}UpdateBuilder(table string) *{{.upperStartCamelObject}}UpdateBuilder {
-	builder := BaseOptionUpdateBuilder{}
+func New{{.upperStartCamelObject}}UpdateBuilder(table string) {{.upperStartCamelObject}}UpdateBuilder {
+	builder := {{.upperStartCamelObject}}UpdateBuilder{}
 	builder.SetBuilder(sq.Update(table))
+	return &builder
+}
+
+//提供创建函数
+func New{{.upperStartCamelObject}}SelectBuilder(table string) {{.upperStartCamelObject}}SelectBuilder {
+	builder := {{.upperStartCamelObject}}SelectBuilder{}
+	builder.SetBuilder(sq.Select().From(m.table))
 	return &builder
 }
 
