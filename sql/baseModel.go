@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	BaseFields = []string{"`id`", "`created_date`", "`created_date`", "`created_user_name`", "`created_user_id`", "`modified_date`", "`modified_user_name`", "`modified_user_id`"}
+	BaseFields = []string{"`id`", "`deleted`", "`created_date`", "`created_user_name`", "`created_user_id`", "`modified_date`", "`modified_user_name`", "`modified_user_id`"}
 )
 
 type BaseModel struct {
