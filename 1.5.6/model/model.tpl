@@ -60,3 +60,12 @@ func New{{.upperStartCamelObject}}SelectBuilder(table string) {{.upperStartCamel
 	return builder
 }
 
+// #region {{.upperStartCamelObject}}的【 Getter Setter 】方法
+func (m *{{.upperStartCamelObject}}) Getxxx() string {
+
+	return ""
+}
+func (m *{{.upperStartCamelObject}}) Setxxx(value string) {
+
+}
+// #endregion

@@ -10,20 +10,8 @@ type (
 
 	{{.upperStartCamelObject}} struct {
 	    //数据库表映射的结构体
+	    //***所有字段中可空类型[ sql.Nullxxx ]的统一使用【get set】且字段名改为小写
+	    //以减少取值赋值时的if判断【get set】在 {{.upperStartCamelObject}}Model.go中增加
 		{{.fields}}
 	}
 )
-
-
-func (m *{{.upperStartCamelObject}} ) SetInsert(name string, id uint64, date time.Time) {
-	m.CreatedDate = date
-	m.CreatedUserName = name
-	m.CreatedUserId = id
-
-}
-
-func (m *{{.upperStartCamelObject}} ) SetEdit(name string, id int64, date time.Time) {
-	m.ModifiedDate = sql.NullTime{Time: date, Valid: true}
-	m.ModifiedUserName = sql.NullString{String: name, Valid: true}
-	m.ModifiedUserId = sql.NullInt64{Int64: id, Valid: true}
-}

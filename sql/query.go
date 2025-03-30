@@ -21,7 +21,7 @@ func (m *Query[TEntity]) FindSum(ctx context.Context, builder sq.SelectBuilder, 
 
 	builder = builder.Columns("IFNULL(SUM(" + field + "),0)")
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).ToSql()
+	query, values, err := builder.ToSql()
 	if err != nil {
 		return 0, err
 	}
@@ -53,7 +53,7 @@ func (m *Query[TEntity]) FindAll(ctx context.Context, builder sq.SelectBuilder, 
 		builder = builder.OrderBy(orderBy)
 	}
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).ToSql()
+	query, values, err := builder.ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.Sele
 	}
 	offset := (page - 1) * pageSize
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
+	query, values, err := builder.Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +121,7 @@ func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builde
 	}
 	offset := (page - 1) * pageSize
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
+	query, values, err := builder.Offset(uint64(offset)).Limit(uint64(pageSize)).ToSql()
 	if err != nil {
 		return nil, total, err
 	}
@@ -146,7 +146,7 @@ func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder sq.Se
 		builder = builder.Where(" id < ? ", preMinId)
 	}
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).OrderBy("id DESC").Limit(uint64(pageSize)).ToSql()
+	query, values, err := builder.OrderBy("id DESC").Limit(uint64(pageSize)).ToSql()
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (m *Query[TEntity]) FindPageListByIdASC(ctx context.Context, builder sq.Sel
 		builder = builder.Where(" id > ? ", preMaxId)
 	}
 
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).OrderBy("id ASC").Limit(uint64(pageSize)).ToSql()
+	query, values, err := builder.OrderBy("id ASC").Limit(uint64(pageSize)).ToSql()
 	if err != nil {
 		return nil, err
 	}

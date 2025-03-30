@@ -8,6 +8,10 @@ import (
 	"time"
 )
 
+var (
+	BaseFields = []string{"`id`", "`created_date`", "`created_date`", "`created_user_name`", "`created_user_id`", "`modified_date`", "`modified_user_name`", "`modified_user_id`"}
+)
+
 type BaseModel struct {
 	Id               uint64         `db:"id"`
 	Deleted          uint64         `db:"deleted"`
@@ -17,6 +21,28 @@ type BaseModel struct {
 	ModifiedDate     sql.NullTime   `db:"modified_date"`
 	ModifiedUserName sql.NullString `db:"modified_user_name"`
 	ModifiedUserId   sql.NullInt64  `db:"modified_user_id"`
+}
+
+func (m *BaseModel) SetInsertField(name string, id uint64, date time.Time) {
+	m.CreatedDate = date
+	m.CreatedUserName = name
+	m.CreatedUserId = id
+}
+
+func (m *BaseModel) SetEditField(name string, id int64, date time.Time) {
+	m.ModifiedDate = sql.NullTime{Time: date, Valid: true}
+	m.ModifiedUserName = sql.NullString{String: name, Valid: true}
+	m.ModifiedUserId = sql.NullInt64{Int64: id, Valid: true}
+}
+
+func (m *BaseModel) GetEditField() (name string, date time.Time) {
+	if m.ModifiedDate.Valid {
+		date = m.ModifiedDate.Time
+	}
+	if m.ModifiedUserName.Valid {
+		name = m.ModifiedUserName.String
+	}
+	return name, date
 }
 
 type BaseOpt interface {
