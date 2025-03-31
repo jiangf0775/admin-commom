@@ -197,22 +197,17 @@ func (m *Query[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context,
 func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, field string) (uint64, error) {
 
 	if len(field) == 0 {
-		return 0, errors.Wrapf(errors.New("FindCount Least One Field"), "FindCount Least One Field")
+		field = "`id`"
 	}
 
-	/*builder = builder.Columns("COUNT(" + field + ")")
-
-	query, values, err := builder.Where("deleted = ?", DELETE_NO).ToSql()
+	builder = builder.Columns("COUNT(" + field + ")")
+	query, values, err := builder.ToSql()
 	if err != nil {
 		return 0, err
-	}*/
-
-	query := "SELECT COUNT(id) FROM `base_option` WHERE deleted = ?"
-	var values = make([]interface{}, 1)
-	values[0] = 0
+	}
 
 	var resp int64
-	err := conn.QueryRowCtx(ctx, &resp, query, values...)
+	err = conn.QueryRowCtx(ctx, &resp, query, values...)
 
 	switch err {
 	case nil:

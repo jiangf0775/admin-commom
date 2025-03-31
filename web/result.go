@@ -30,6 +30,20 @@ func SuccessMsg(msg string) *Result {
 	}
 }
 
+func SuccessCode(code *Error) *Result {
+	return &Result{
+		Code: code.Code,
+		Msg:  code.Msg,
+	}
+}
+func SuccessCodeData(code *Error, data any) *Result {
+	return &Result{
+		Code: code.Code,
+		Msg:  code.Msg,
+		Data: data,
+	}
+}
+
 func Fail(err *Error) *Result {
 	return &Result{
 		Code: err.Code,

@@ -5,10 +5,11 @@ type Error struct {
 	Msg  string `json:"msg"`
 }
 
-func NewError(code int, msg string) *Error {
-	return &Error{Code: code, Msg: msg}
-}
-
+// errors.error 接口方法
 func (e *Error) Error() string {
 	return e.Msg
+}
+
+func NewError(code int, msg string) *Error {
+	return &Error{Code: code, Msg: msg}
 }
