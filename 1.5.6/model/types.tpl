@@ -13,5 +13,8 @@ type (
 	    //***所有字段中可空类型[ sql.Nullxxx ]的统一使用【get set】
 	    //【get set】在 {{.upperStartCamelObject}}Model.go 文件中增加
 		{{.fields}}
+
+		//TODO 删除与 sqls.BaseModel 重复的字段
+		sqls.BaseModel `db:"-"`
 	}
 )
