@@ -3,7 +3,8 @@
 
 
 func new{{.upperStartCamelObject}}Model(conn sqlx.SqlConn{{if .withCache}}, c cache.CacheConf, opts ...cache.Option{{end}}) *default{{.upperStartCamelObject}}Model {
-    //该方法在xxxxModel.go文件中被调用 ***将文件中 _sqlQuery_ 全部替换为 {{.upperStartCamelObject}}Query
+    //该方法在xxxxModel.go文件中被调用
+    //TODO 将文件中 _sqlQuery_ 全部替换为 {{.upperStartCamelObject}}Query
      _sqlQuery_.Conn = conn
      _sqlQuery_.Table = {{.table}}
 
