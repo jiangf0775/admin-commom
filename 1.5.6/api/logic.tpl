@@ -20,7 +20,7 @@ func New{{.logic}}(ctx context.Context, svcCtx *svc.ServiceContext) *{{.logic}} 
 	}
 }
 
-func (l *{{.logic}}) {{.function}}({{.request}}) (resp *web.Result, err error) {
+func (l *{{.logic}}) {{.function}}({{.request}}) (*web.Result, error) {
 	// todo: add your logic here and delete this line
 
     //todo: 需要返回数据则使用【 ResultData 】方法
