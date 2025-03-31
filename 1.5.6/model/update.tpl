@@ -9,7 +9,7 @@ func (m *default{{.upperStartCamelObject}}Model) Update(ctx context.Context, {{i
 		//TODO 1.仅需要更新的字段
 		var setStr = "`field1`=?,`field2`=?,`field3`=?,`modified_date`=?, `modified_user_name`=?, `modified_user_id`=?"
 		query := fmt.Sprintf("update %s set %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table, setStr)
-		//TODO 2.删去不需要跟新的字段值
+		//TODO 2.删去不需要跟新的字段值 ！！注意顺序
 		return conn.ExecCtx(ctx, query, {{.expressionValues}})
 	}, {{.keyValues}}){{else}}query := fmt.Sprintf("update %s set %s where {{.originalPrimaryKey}} = {{if .postgreSql}}$1{{else}}?{{end}}", m.table, {{.lowerStartCamelObject}}RowsWithPlaceHolder)
     _,err:=m.conn.ExecCtx(ctx, query, {{.expressionValues}}){{end}}
