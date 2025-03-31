@@ -6,7 +6,7 @@ import (
 )
 
 type {{.logic}} struct {
-    webs.LogicResult
+    web.LogicResult
 	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext

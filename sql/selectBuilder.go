@@ -1,6 +1,7 @@
 package sql
 
 import (
+	"common/tool"
 	sq "github.com/Masterminds/squirrel"
 )
 
@@ -29,4 +30,13 @@ func (m QueryBuilder) SkipDel() QueryBuilder {
 func (m QueryBuilder) BaseColumns() QueryBuilder {
 	m.builder = m.builder.Columns(BaseFields...)
 	return QueryBuilder{builder: m.builder}
+}
+
+func (m QueryBuilder) IdIn(ids []uint64) QueryBuilder {
+	if len(ids) == 0 {
+		return m
+	}
+	var idList = tool.Uint64ToInterfaces(ids)
+	m.builder = m.builder.Where(" id in(?)", idList...)
+	return m
 }

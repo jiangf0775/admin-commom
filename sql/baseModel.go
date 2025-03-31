@@ -64,14 +64,14 @@ type BaseQuery[TEntity comparable] interface {
 
 type BaseInsert[TEntity comparable] interface {
 	BaseOpt
-	Insert(ctx context.Context, data *TEntity) (sql.Result, error)
+	Insert(ctx context.Context, data TEntity) (sql.Result, error)
 	InsertByBuild(ctx context.Context, builder squirrel.InsertBuilder) (int64, error)
 	InsertBuilder() squirrel.InsertBuilder
 }
 
 type BaseUpdate[TEntity comparable] interface {
 	BaseOpt
-	Update(ctx context.Context, data *TEntity) error
+	Update(ctx context.Context, data TEntity) error
 	UpdateByBuild(ctx context.Context, builder squirrel.UpdateBuilder) (int64, error)
 	//UpdateBuilder() squirrel.UpdateBuilder
 }
