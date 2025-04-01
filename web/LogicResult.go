@@ -45,3 +45,7 @@ func (l *LogicResult) SuccessCode(code *Error) (*Result, error) {
 func (l *LogicResult) PageCode(code *Error) (*Result, error) {
 	return SuccessCodeData(code, PageResult{}), nil
 }
+
+func (l *LogicResult) PageData(data any, total uint64) (*Result, error) {
+	return SuccessCodeData(NotifySuccess, PageResult{Total: total, Results: data}), nil
+}
