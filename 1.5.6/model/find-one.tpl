@@ -39,20 +39,36 @@ func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context,bui
     return _sqlQuery_.FindAll(ctx, builder, orderBy)
 }
 
+func (m *default{{.upperStartCamelObject}}Model) FindAllIdASC(ctx context.Context,builder sq.SelectBuilder) ([]*{{.upperStartCamelObject}},error) {
+    return m.FindAll(ctx, builder, " id Asc")
+}
+
+func (m *default{{.upperStartCamelObject}}Model) FindAllIdASC(ctx context.Context,builder sq.SelectBuilder) ([]*{{.upperStartCamelObject}},error) {
+    return m.FindAll(ctx, builder, " id Desc")
+}
+
 func (m *default{{.upperStartCamelObject}}Model) FindListByPage(ctx context.Context,builder sq.SelectBuilder,page ,pageSize uint64,orderBy string) ([]*{{.upperStartCamelObject}},error) {
     return _sqlQuery_.FindPageListByPage(ctx, builder, page, pageSize, orderBy)
 }
 
-func (m *default{{.upperStartCamelObject}}Model) FindListByPageWithTotal(ctx context.Context,builder sq.SelectBuilder,page ,pageSize uint64,orderBy string) ([]*{{.upperStartCamelObject}},uint64,error) {
-    return _sqlQuery_.FindPageListByPageWithTotal(ctx, builder, page, pageSize, orderBy)
+func (m *default{{.upperStartCamelObject}}Model) FindListByPageIdASC(ctx context.Context,builder sq.SelectBuilder,preMaxId ,pageSize uint64) ([]*{{.upperStartCamelObject}},error)  {
+    return _sqlQuery_.FindPageListByIdASC(ctx, builder, preMaxId, pageSize)
 }
 
 func (m *default{{.upperStartCamelObject}}Model) FindListByPageIdDESC(ctx context.Context,builder sq.SelectBuilder ,preMinId ,pageSize uint64) ([]*{{.upperStartCamelObject}},error) {
     return _sqlQuery_.FindPageListByIdDESC(ctx, builder, preMinId, pageSize)
 }
 
-func (m *default{{.upperStartCamelObject}}Model) FindListByPageIdASC(ctx context.Context,builder sq.SelectBuilder,preMaxId ,pageSize uint64) ([]*{{.upperStartCamelObject}},error)  {
-    return _sqlQuery_.FindPageListByIdASC(ctx, builder, preMaxId, pageSize)
+func (m *default{{.upperStartCamelObject}}Model) FindListByPageWithTotal(ctx context.Context,builder sq.SelectBuilder,page ,pageSize uint64,orderBy string) ([]*{{.upperStartCamelObject}},uint64,error) {
+    return _sqlQuery_.FindPageListByPageWithTotal(ctx, builder, page, pageSize, orderBy)
+}
+
+func (m *default{{.upperStartCamelObject}}Model) FindListByPageWithTotalIdASC(ctx context.Context,builder sq.SelectBuilder,page ,pageSize uint64) ([]*{{.upperStartCamelObject}},uint64,error) {
+    return m.FindPageListByPageWithTotal(ctx, builder, page, pageSize, " id ASC")
+}
+
+func (m *default{{.upperStartCamelObject}}Model) FindListByPageWithTotalIdDESC(ctx context.Context,builder sq.SelectBuilder,page ,pageSize uint64) ([]*{{.upperStartCamelObject}},uint64,error) {
+    return m.FindPageListByPageWithTotal(ctx, builder, page, pageSize, " id DESC")
 }
 
 func (m *default{{.upperStartCamelObject}}Model) Trans(ctx context.Context,fn func(ctx context.Context,session sqlx.Session) error) error {

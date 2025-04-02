@@ -138,56 +138,6 @@ func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builde
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByIdDESC(ctx context.Context, builder sq.SelectBuilder, preMinId, pageSize uint64) ([]*TEntity, error) {
-
-	builder = builder.Columns(m.Rows)
-
-	if preMinId > 0 {
-		builder = builder.Where(" id < ? ", preMinId)
-	}
-
-	query, values, err := builder.OrderBy("id DESC").Limit(uint64(pageSize)).ToSql()
-	if err != nil {
-		return nil, err
-	}
-
-	var resp []*TEntity
-
-	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
-
-	switch err {
-	case nil:
-		return resp, nil
-	default:
-		return nil, err
-	}
-}
-
-func (m *Query[TEntity]) FindPageListByIdASC(ctx context.Context, builder sq.SelectBuilder, preMaxId, pageSize uint64) ([]*TEntity, error) {
-
-	builder = builder.Columns(m.Rows)
-
-	if preMaxId > 0 {
-		builder = builder.Where(" id > ? ", preMaxId)
-	}
-
-	query, values, err := builder.OrderBy("id ASC").Limit(uint64(pageSize)).ToSql()
-	if err != nil {
-		return nil, err
-	}
-
-	var resp []*TEntity
-
-	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
-
-	switch err {
-	case nil:
-		return resp, nil
-	default:
-		return nil, err
-	}
-}
-
 func (m *Query[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context, session sqlx.Session) error) error {
 	return m.Conn.TransactCtx(ctx, func(ctx context.Context, session sqlx.Session) error {
 		return fn(ctx, session)
