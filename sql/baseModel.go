@@ -55,15 +55,18 @@ type BaseQuery[TEntity comparable] interface {
 	FindOne(ctx context.Context, id uint64) (*TEntity, error)
 	FindSum(ctx context.Context, builder squirrel.SelectBuilder, field string) (float64, error)
 	FindCount(ctx context.Context, builder squirrel.SelectBuilder, field string) (uint64, error)
+
 	FindAll(ctx context.Context, builder squirrel.SelectBuilder, orderBy string) ([]*TEntity, error)
 	FindAllIdASC(ctx context.Context, builder squirrel.SelectBuilder) ([]*TEntity, error)
 	FindAllIdDESC(ctx context.Context, builder squirrel.SelectBuilder) ([]*TEntity, error)
-	FindListByPage(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, error)
-	FindListByPageIdASC(ctx context.Context, builder squirrel.SelectBuilder, preMaxId, pageSize uint64) ([]*TEntity, error)
-	FindListByPageIdDESC(ctx context.Context, builder squirrel.SelectBuilder, preMinId, pageSize uint64) ([]*TEntity, error)
-	FindListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, uint64, error)
-	FindListByPageWithTotalIdASC(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize uint64) ([]*TEntity, uint64, error)
-	FindListByPageWithTotalIdDESC(ctx context.Context, builder squirrel.SelectBuilder, page, pageSize uint64) ([]*TEntity, uint64, error)
+
+	FindListByPage(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64, orderBy string) ([]*TEntity, error)
+	FindListByPageIdASC(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64) ([]*TEntity, error)
+	FindListByPageIdDESC(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64) ([]*TEntity, error)
+
+	FindListByPageWithTotal(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64, orderBy string) ([]*TEntity, uint64, error)
+	FindListByPageWithTotalIdASC(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64) ([]*TEntity, uint64, error)
+	FindListByPageWithTotalIdDESC(ctx context.Context, builder squirrel.SelectBuilder, index, pageSize uint64) ([]*TEntity, uint64, error)
 }
 
 type BaseInsert[TEntity comparable] interface {

@@ -69,7 +69,7 @@ func (m *Query[TEntity]) FindAll(ctx context.Context, builder sq.SelectBuilder, 
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, error) {
+func (m *Query[TEntity]) FindListByPage(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, error) {
 
 	builder = builder.Columns(m.Rows)
 
@@ -101,7 +101,7 @@ func (m *Query[TEntity]) FindPageListByPage(ctx context.Context, builder sq.Sele
 	}
 }
 
-func (m *Query[TEntity]) FindPageListByPageWithTotal(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, uint64, error) {
+func (m *Query[TEntity]) FindListByPageWithTotal(ctx context.Context, builder sq.SelectBuilder, page, pageSize uint64, orderBy string) ([]*TEntity, uint64, error) {
 
 	total, err := getCount(ctx, m.Conn, builder, "id")
 	if err != nil {
