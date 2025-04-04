@@ -20,6 +20,13 @@ func New{{.logic}}(ctx context.Context, svcCtx *svc.ServiceContext) *{{.logic}} 
 	}
 }
 
+/** TODO 返回类型：
+ * 新增的方法 返回类型 ( InsertResult, error )
+ * 更新的方法 返回类型 ( UpdateResult, error )
+ * 删除的方法 返回类型 ( DeleteResult, error )
+ * 分页的方法 返回类型 ( PageResult, error )
+ * 其他方法 应返回Model方法对应的类型！
+ */
 func (l *{{.logic}}) {{.function}}({{.request}}) (*web.Result, error) {
 	// todo: add your logic here and delete this line
 

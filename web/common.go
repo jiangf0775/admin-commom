@@ -30,15 +30,6 @@ func GetJwtToken(secretKey string, iat, exp int64, payload string) (string, erro
 	return token.SignedString([]byte(secretKey))
 }
 
-func HttpResult[T any](w http.ResponseWriter, r http.Request, data T, err error) {
-
-	if err != nil {
-		httpx.ErrorCtx(r.Context(), w, err)
-	} else {
-		httpx.OkJsonCtx(r.Context(), w, SuccessData(data))
-	}
-}
-
 func HandlerAction(w http.ResponseWriter, r *http.Request, err error, resp any) {
 
 	if err != nil {
