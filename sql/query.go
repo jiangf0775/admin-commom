@@ -15,7 +15,7 @@ type Query[TEntity comparable] struct {
 
 func (m *Query[TEntity]) FindSum(ctx context.Context, builder sq.SelectBuilder, field string) (float64, error) {
 
-	if len(field) == 0 {
+	if field == "" {
 		return 0, errors.Wrapf(errors.New("FindSum Least One Field"), "FindSum Least One Field")
 	}
 
@@ -146,7 +146,7 @@ func (m *Query[TEntity]) Trans(ctx context.Context, fn func(ctx context.Context,
 
 func getCount(ctx context.Context, conn sqlx.SqlConn, builder sq.SelectBuilder, field string) (uint64, error) {
 
-	if len(field) == 0 {
+	if field == "" {
 		field = "`id`"
 	}
 

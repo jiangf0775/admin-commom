@@ -14,7 +14,7 @@ var (
 
 type BaseModel struct {
 	Id               uint64         `db:"id"`
-	Deleted          uint64         `db:"deleted"`
+	Deleted          uint8          `db:"deleted"`
 	CreatedDate      time.Time      `db:"created_date"`
 	CreatedUserName  string         `db:"created_user_name"`
 	CreatedUserId    uint64         `db:"created_user_id"`
@@ -29,10 +29,10 @@ func (m *BaseModel) SetInsertField(name string, id uint64, date time.Time) {
 	m.CreatedUserId = id
 }
 
-func (m *BaseModel) SetEditField(name string, id int64, date time.Time) {
+func (m *BaseModel) SetEditField(name string, id uint64, date time.Time) {
 	m.ModifiedDate = sql.NullTime{Time: date, Valid: true}
 	m.ModifiedUserName = sql.NullString{String: name, Valid: true}
-	m.ModifiedUserId = sql.NullInt64{Int64: id, Valid: true}
+	m.ModifiedUserId = sql.NullInt64{Int64: int64(id), Valid: true}
 }
 
 func (m *BaseModel) GetEditField() (name string, date time.Time) {
