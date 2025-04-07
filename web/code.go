@@ -10,15 +10,13 @@ var (
 	NotifyNotFundData = NewError(OK, "没有获取到数据")
 	NotifySuccess     = NewError(OK, "success")
 
-	ServerInternalError = NewError(1100, "服务内部错误")
-	ServerNilError      = NewError(1101, "空指针异常")
-
 	BizError = NewError(1200, "业务错误")
 
 	ValitateRangeError = NewError(FAIL, "数据校验数不通过，字范围设置错误")   // wrong number range setting
 	ValitateTypeError  = NewError(FAIL, "数据校验数不通过，字段值类型设置错误") // unsupported type on setting field value
 
 	JwtGetUserInfoError         = NewError(FAIL, "用户信息获取失败")
+	JwtAuthenticationError      = NewError(FAIL, "token认证失败")
 	RequestArgumentConvertError = NewError(FAIL, "请求参数类型转换错误")
 	DefaultError                = NewError(FAIL, "执行时发生错误")
 )

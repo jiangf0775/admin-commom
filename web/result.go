@@ -50,3 +50,9 @@ func Fail(err *Error) *Result {
 		Msg:  err.Msg,
 	}
 }
+func FailSysErr(err error) *Result {
+	return &Result{
+		Code: 500,
+		Msg:  err.Error(),
+	}
+}

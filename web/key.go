@@ -1,7 +1,9 @@
 package web
 
-const OK = 0
-const FAIL = -1
+const (
+	FAIL = -1
+	OK   = 0
+)
 
 const (
 	TOKEN_PAYLOAD        string = "payload"
