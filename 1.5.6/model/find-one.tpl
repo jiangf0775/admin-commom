@@ -26,6 +26,11 @@ func (m *default{{.upperStartCamelObject}}Model) FindOne(ctx context.Context, {{
 }
 
 //TODO 自定义方法 手动加上 _sqlQuery_
+func (m *Query[TEntity]) FirstDefault(ctx context.Context, builder sq.SelectBuilder) (*TEntity, error){
+    return _sqlQuery_.FirstDefault(ctx, builder)
+}
+
+
 func (m *default{{.upperStartCamelObject}}Model) FindSum(ctx context.Context,builder sq.SelectBuilder, field string) (float64,error) {
     return _sqlQuery_.FindSum(ctx, builder, field)
 }
@@ -33,6 +38,10 @@ func (m *default{{.upperStartCamelObject}}Model) FindSum(ctx context.Context,bui
 
 func (m *default{{.upperStartCamelObject}}Model) FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (uint64,error) {
     return _sqlQuery_.FindCount(ctx, builder, field)
+}
+
+func (m *Query[TEntity]) FindCountDefault(ctx context.Context, builder sq.SelectBuilder) (uint64, error){
+    return _sqlQuery_.FindCountDefault(ctx, builder)
 }
 
 func (m *default{{.upperStartCamelObject}}Model) FindAll(ctx context.Context,builder sq.SelectBuilder,orderBy string) ([]*{{.upperStartCamelObject}},error) {

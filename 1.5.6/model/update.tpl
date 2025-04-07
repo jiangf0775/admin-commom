@@ -33,6 +33,6 @@ func(m *default{{.upperStartCamelObject}}Model)  InsertBuilder() sq.InsertBuilde
 	return sq.Insert(m.table)
 }
 
-func(m *default{{.upperStartCamelObject}}Model)  DeleteBuilder() sq.DeleteBuilder {
-	return sq.Delete(m.table)
+func(m *default{{.upperStartCamelObject}}Model)  DeleteBuilder() {{.upperStartCamelObject}}RemoveBuilder {
+	return New{{.upperStartCamelObject}}RemoveBuilder(m.table)
 }

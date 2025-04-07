@@ -38,9 +38,29 @@ func (m *Query[TEntity]) FindSum(ctx context.Context, builder sq.SelectBuilder, 
 	}
 }
 
+func (m *Query[TEntity]) FirstDefault(ctx context.Context, builder sq.SelectBuilder) (*TEntity, error) {
+	builder = builder.Columns(m.Rows)
+	query, values, err := builder.Offset(uint64(0)).Limit(uint64(1)).ToSql()
+	if err != nil {
+		return nil, err
+	}
+
+	var resp []*TEntity
+	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
+	if err != nil {
+		return nil, err
+	}
+	return resp[0], nil
+}
+
 func (m *Query[TEntity]) FindCount(ctx context.Context, builder sq.SelectBuilder, field string) (uint64, error) {
 
 	return getCount(ctx, m.Conn, builder, field)
+}
+
+func (m *Query[TEntity]) FindCountDefault(ctx context.Context, builder sq.SelectBuilder) (uint64, error) {
+
+	return getCount(ctx, m.Conn, builder, "1") //select count(1)
 }
 
 func (m *Query[TEntity]) FindAll(ctx context.Context, builder sq.SelectBuilder, orderBy string) ([]*TEntity, error) {
@@ -92,7 +112,7 @@ func (m *Query[TEntity]) FindListByPage(ctx context.Context, builder sq.SelectBu
 	var resp []*TEntity
 
 	err = m.Conn.QueryRowsCtx(ctx, &resp, query, values...)
-
+	
 	switch err {
 	case nil:
 		return resp, nil
